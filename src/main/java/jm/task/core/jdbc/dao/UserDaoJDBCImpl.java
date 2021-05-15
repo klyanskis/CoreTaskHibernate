@@ -37,10 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (Connection connection = Util.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT IN TO users VALUES (?, ?, ?)")) {
-                preparedStatement.setString(2, name);
-                preparedStatement.setString(3, lastName);
-                preparedStatement.setByte(4, age);
+            try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (name,lastname,age)VALUES ('"+ name +"','"+lastName+"','"+age+"')")) {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -83,7 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Connection connection = Util.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE * FROM users")) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users")) {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
